@@ -1,5 +1,6 @@
 package DB;
 
+import Sesion.Sesion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,5 +36,32 @@ public class AccesoUsuarios {
             JOptionPane.showMessageDialog(null,"se puteo");
         }
         return respuesta;
+    }
+    public String buscarIdentificacion(String usuario){
+        String respuesta=null;
+        try {
+            preparar=database.abrirConexion().prepareStatement("select nomemp||' '||apelemp from empleado where usuario=?");
+            preparar.setString(1, usuario);
+            resultado=preparar.executeQuery();
+            resultado.next();
+            respuesta=resultado.getString(1);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"se puteo");
+        }
+        return respuesta;
+    }
+
+    public void asignarIdentificacion(String user) {
+        Sesion sesion = Sesion.getInstance();
+        try {
+            preparar=database.abrirConexion().prepareStatement("select nomemp, apelemp from empleado where usuario=?");
+            preparar.setString(1, user);
+            resultado=preparar.executeQuery();
+            resultado.next();
+            sesion.iniciarSesion(resultado.getString(1), resultado.getString(2));
+//To change body of generated methods, choose Tools | Templates.
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"se puteo");
+        }
     }
 }
