@@ -1,10 +1,5 @@
     $(document).ready(function(){
-    $("#principal").load("http://localhost:8084/sgath/acceso.html");
-    darHora();
+        ponerHora();
+        $('#hora').html(darHora());
+        $("#principal").load("http://localhost:8084/sgath/acceso.html");
     });
-    function darHora(){
-        var f=new Date();
-        hora=f.getHours()+":"+f.getMinutes()+":"+f.getSeconds();
-        fecha=f.getDate()+"/"+f.getMonth()+"/"+f.getFullYear();
-        $('#hora').html(fecha+"      "+hora);
-    }
