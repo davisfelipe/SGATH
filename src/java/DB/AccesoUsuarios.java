@@ -33,7 +33,6 @@ public class AccesoUsuarios {
                 respuesta=false;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"se puteo");
         }
         return respuesta;
     }
@@ -46,11 +45,9 @@ public class AccesoUsuarios {
             resultado.next();
             respuesta=resultado.getString(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"se puteo");
         }
         return respuesta;
     }
-
     public void asignarIdentificacion(String user) {
         Sesion sesion = Sesion.getInstance();
         try {
@@ -61,7 +58,18 @@ public class AccesoUsuarios {
             sesion.iniciarSesion(resultado.getString(1), resultado.getString(2));
 //To change body of generated methods, choose Tools | Templates.
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"se puteo");
         }
+    }
+    public String obtenerCargo(String user){
+        String respuesta=null;
+        try {
+            preparar=database.abrirConexion().prepareStatement("select c.descargo from empleado e, cargo c where c.idcargo=e.idcargo_fk and e.usuario=?");
+            preparar.setString(1, user);
+            resultado=preparar.executeQuery();
+            resultado.next();
+            respuesta=resultado.getString(1);
+        } catch (SQLException ex) {
+        }
+        return respuesta;
     }
 }

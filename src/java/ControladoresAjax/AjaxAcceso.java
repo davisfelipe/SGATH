@@ -59,6 +59,7 @@ public class AjaxAcceso extends HttpServlet {
                 usuario.asignarIdentificacion(user);
                 break;
             case "3":
+                out.print(usuario.obtenerCargo(user));
                 break;
         }
         
