@@ -19,6 +19,18 @@ $(document).ready(function(){
            }
        });
    });
+   $('#enviarPerfil').click(function(){
+       $('#principal').load("http://localhost:8084/sgath/gestionPerfil.html");
+       
+   });
+   $('#enviarProgramacion').click(function(){
+       $('#principal').load("http://localhost:8084/sgath/gestionProgramacion.html");
+       
+   });
+   $('#enviarProceso').click(function(){
+       $('#principal').load("http://localhost:8084/sgath/gestionProceso.html");
+       
+   });
 });
 function ventanaInicio(){
     window.location.assign("http://localhost:8084/sgath/index.html");
