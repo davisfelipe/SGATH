@@ -1,5 +1,6 @@
 package ControladoresAjax;
 
+import DB.AccesoUsuarios;
 import Sesion.Sesion;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,16 +39,12 @@ public class AjaxAnalista extends HttpServlet {
                 out.print(sesion.obtenerSesion());
                 break;
             case "2":
+                AccesoUsuarios usuarios=new AccesoUsuarios();
+                usuarios.fechaSalida(sesion.obtenerUsuario());
                 sesion.cerrarSesion();
                 break;
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

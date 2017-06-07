@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -58,7 +57,7 @@ public class AccesoUsuarios {
             preparar.setString(1, user);
             resultado=preparar.executeQuery();
             resultado.next();
-            sesion.iniciarSesion(resultado.getString(1), resultado.getString(2));
+            sesion.iniciarSesion(resultado.getString(1), resultado.getString(2),user);
             preparar.close();
 //To change body of generated methods, choose Tools | Templates.
         } catch (SQLException ex) {
@@ -84,7 +83,16 @@ public class AccesoUsuarios {
             preparar.setString(1, user);
             preparar.executeUpdate();
             preparar.close();
-            JOptionPane.showMessageDialog(null, user);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesoUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void fechaSalida(String user){
+        try {
+            preparar=database.abrirConexion().prepareStatement("update empleado set fechasalida=sysdate where usuario=?");
+            preparar.setString(1, user);
+            preparar.executeUpdate();
+            preparar.close();
         } catch (SQLException ex) {
             Logger.getLogger(AccesoUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
