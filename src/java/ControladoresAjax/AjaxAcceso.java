@@ -61,6 +61,9 @@ public class AjaxAcceso extends HttpServlet {
             case "3":
                 out.print(usuario.obtenerCargo(user));
                 break;
+            case "4":
+                usuario.fechaIngreso(user);
+                break;
         }
         
     }

@@ -23,7 +23,7 @@ public class AccesoUsuarios {
     public boolean buscarUsuario(String usuario, String contraseña){
         boolean respuesta=false;
         try {
-            preparar=database.abrirConexion().prepareStatement("select password from empleado where usuario=?");
+            preparar=database.abrirConexion().prepareStatement("select contrasena from empleado where usuario=?");
             preparar.setString(1, usuario);
             resultado=preparar.executeQuery();
             resultado.next();
@@ -32,6 +32,7 @@ public class AccesoUsuarios {
             }else{
                 respuesta=false;
             }
+            preparar.close();
         } catch (SQLException ex) {
         }
         return respuesta;
@@ -39,23 +40,26 @@ public class AccesoUsuarios {
     public String buscarIdentificacion(String usuario){
         String respuesta=null;
         try {
-            preparar=database.abrirConexion().prepareStatement("select nomemp||' '||apelemp from empleado where usuario=?");
+            preparar=database.abrirConexion().prepareStatement("select nombreempleado||' '||apellidoempleado from empleado where usuario=?");
             preparar.setString(1, usuario);
             resultado=preparar.executeQuery();
             resultado.next();
-            respuesta=resultado.getString(1);
+            respuesta=resultado.getString(1); 
+            preparar.close();
         } catch (SQLException ex) {
         }
+        
         return respuesta;
     }
     public void asignarIdentificacion(String user) {
         Sesion sesion = Sesion.getInstance();
         try {
-            preparar=database.abrirConexion().prepareStatement("select nomemp, apelemp from empleado where usuario=?");
+            preparar=database.abrirConexion().prepareStatement("select nombreempleado, apellidoempleado from empleado where usuario=?");
             preparar.setString(1, user);
             resultado=preparar.executeQuery();
             resultado.next();
             sesion.iniciarSesion(resultado.getString(1), resultado.getString(2));
+            preparar.close();
 //To change body of generated methods, choose Tools | Templates.
         } catch (SQLException ex) {
         }
@@ -63,13 +67,26 @@ public class AccesoUsuarios {
     public String obtenerCargo(String user){
         String respuesta=null;
         try {
-            preparar=database.abrirConexion().prepareStatement("select c.descargo from empleado e, cargo c where c.idcargo=e.idcargo_fk and e.usuario=?");
+            preparar=database.abrirConexion().prepareStatement("select cargoempleado from empleado where usuario=?");
             preparar.setString(1, user);
             resultado=preparar.executeQuery();
             resultado.next();
             respuesta=resultado.getString(1);
+            preparar.close();
         } catch (SQLException ex) {
         }
+        
         return respuesta;
+    }
+    public void fechaIngreso(String user){
+        try {
+            preparar=database.abrirConexion().prepareStatement("update empleado set fechaentrada=sysdate where usuario=?");
+            preparar.setString(1, user);
+            preparar.executeUpdate();
+            preparar.close();
+            JOptionPane.showMessageDialog(null, user);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesoUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

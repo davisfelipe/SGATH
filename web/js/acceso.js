@@ -16,18 +16,20 @@
                    });
                    $.ajax({
                        type:'POST',
+                       data:{opcion:4,user:user},
+                       url:"AjaxAcceso"
+                   });
+                   $.ajax({
+                       type:'POST',
                        data:{opcion:3,user:user},
                        url:"AjaxAcceso",
                        success:function(result3){
                            cargo=result3;
                            console.log(cargo);
                            switch(cargo){
-                               case "presidente":
+                               case "Analista":
                                    ventanaAnalista();
-                                   break;
-                               case "vicepresidente":
-                                   ventanaAspirante();
-                                   break;
+                                    break;
                            }
                        }
                    });
